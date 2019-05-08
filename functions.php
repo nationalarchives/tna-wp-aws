@@ -23,7 +23,11 @@ function dash_get_client_ip() {
     return $ip_address;
 }
 
-function dash_get_whitelist( $whitelist ) {
+/**
+ * @param $whitelist
+ * @return array|bool
+ */
+function dash_get_whitelist($whitelist ) {
     if ( $whitelist ) {
         if ( is_array($whitelist) ) {
             return $whitelist;
@@ -35,7 +39,12 @@ function dash_get_whitelist( $whitelist ) {
     return false;
 }
 
-function dash_verify_ip( $client_ip, $whitelist ) {
+/**
+ * @param $client_ip
+ * @param $whitelist
+ * @return bool
+ */
+function dash_verify_ip($client_ip, $whitelist ) {
 
     $ip_status = false;
     foreach ($whitelist as $value) {
