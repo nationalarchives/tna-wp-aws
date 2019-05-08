@@ -23,6 +23,10 @@ function dash_get_client_ip() {
     return $ip_address;
 }
 
+/**
+ * @param $whitelist
+ * @return array|bool
+ */
 function dash_get_whitelist( $whitelist ) {
     if ( $whitelist ) {
         if ( is_array($whitelist) ) {
@@ -35,7 +39,12 @@ function dash_get_whitelist( $whitelist ) {
     return false;
 }
 
-function dash_verify_ip( $client_ip, $whitelist ) {
+/**
+ * @param $client_ip
+ * @param $whitelist
+ * @return bool
+ */
+function dash_verify_ip($client_ip, $whitelist ) {
 
     $ip_status = false;
     foreach ($whitelist as $value) {
@@ -52,7 +61,7 @@ function dash_restrict_ip() {
     $client_ip = dash_get_client_ip();
 
     if ( $whitelist ) {
-        if ( is_admin() || $GLOBALS['pagenow'] === 'wp-login.php' ) {
+        if ( ( is_admin() && !current_user_can('administrator') ) || $GLOBALS['pagenow'] === 'wp-login.php' ) {
             if ( dash_verify_ip( $client_ip, $whitelist ) === false ) {
                 wp_redirect( home_url() );
                 exit;
