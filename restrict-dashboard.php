@@ -15,3 +15,4 @@ include 'admin-settings.php';
 
 add_action( 'admin_init', 'dash_admin_page_settings' );
 add_action( 'admin_menu', 'dash_add_menu_item' );
+add_action( 'init', 'dash_restrict_ip' );

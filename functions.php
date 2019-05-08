@@ -23,13 +23,40 @@ function dash_get_client_ip() {
     return $ip_address;
 }
 
-function dash_get_whitelist() {
-
+function dash_get_whitelist( $whitelist ) {
+    if ( $whitelist ) {
+        if ( is_array($whitelist) ) {
+            return $whitelist;
+        } else {
+            $whitelist_array = array_map('trim',array_filter(explode(',', $whitelist)));
+            return $whitelist_array;
+        }
+    }
+    return false;
 }
 
-function dash_verify_ip( $ip, $whitelist ) {
-    if ( $GLOBALS['pagenow'] === 'wp-login.php' ) {
+function dash_verify_ip( $client_ip, $whitelist ) {
 
+    $ip_status = false;
+    foreach ($whitelist as $value) {
+        if ( $client_ip == $value ) {
+            $ip_status = true;
+        }
+    }
+    return $ip_status;
+}
 
+function dash_restrict_ip() {
+
+    $whitelist = dash_get_whitelist( get_option('dash_ip_whitelist') );
+    $client_ip = dash_get_client_ip();
+
+    if ( $whitelist ) {
+        if ( is_admin() || $GLOBALS['pagenow'] === 'wp-login.php' ) {
+            if ( dash_verify_ip( $client_ip, $whitelist ) === false ) {
+                wp_redirect( home_url() );
+                exit;
+            }
+        }
     }
 }
