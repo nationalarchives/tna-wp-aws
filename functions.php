@@ -27,7 +27,7 @@ function dash_get_client_ip() {
  * @param $whitelist
  * @return array|bool
  */
-function dash_get_whitelist($whitelist ) {
+function dash_get_whitelist( $whitelist ) {
     if ( $whitelist ) {
         if ( is_array($whitelist) ) {
             return $whitelist;
@@ -61,7 +61,7 @@ function dash_restrict_ip() {
     $client_ip = dash_get_client_ip();
 
     if ( $whitelist ) {
-        if ( is_admin() || $GLOBALS['pagenow'] === 'wp-login.php' ) {
+        if ( ( is_admin() && !current_user_can('administrator') ) || $GLOBALS['pagenow'] === 'wp-login.php' ) {
             if ( dash_verify_ip( $client_ip, $whitelist ) === false ) {
                 wp_redirect( home_url() );
                 exit;
