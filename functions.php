@@ -60,10 +60,10 @@ function dash_restrict_ip() {
     $whitelist = dash_get_whitelist( get_option('dash_ip_whitelist') );
     $client_ip = dash_get_client_ip();
 
-    if ( $whitelist ) {
+    if ( $whitelist && $GLOBALS['pagenow'] != 'admin-ajax.php') {
         if ( ( is_admin() && !current_user_can('administrator') ) || $GLOBALS['pagenow'] === 'wp-login.php' ) {
             if ( dash_verify_ip( $client_ip, $whitelist ) === false ) {
-                wp_redirect( home_url( '/?'.$client_ip ) );
+                wp_redirect( home_url() );
                 exit;
             }
         }
