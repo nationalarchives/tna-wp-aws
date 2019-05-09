@@ -63,7 +63,7 @@ function dash_restrict_ip() {
     if ( $whitelist ) {
         if ( ( is_admin() && !current_user_can('administrator') ) || $GLOBALS['pagenow'] === 'wp-login.php' ) {
             if ( dash_verify_ip( $client_ip, $whitelist ) === false ) {
-                wp_redirect( home_url() );
+                wp_redirect( home_url( '/?'.$client_ip ) );
                 exit;
             }
         }
