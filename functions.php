@@ -69,3 +69,36 @@ function dash_restrict_ip() {
         }
     }
 }
+
+function dash_is_env( $url ) {
+
+    if ( substr( $url, 0, 4 ) === "dev-" ) {
+
+        return 'dev';
+    }
+    if ( substr( $url, 0, 5 ) === "test-" ) {
+
+        return 'test';
+    }
+    if ( substr( $url, 0, 10 ) === "editorial-" ) {
+
+        return 'editorial';
+    }
+    if ( substr( $url, 0, 9 ) === "localhost" ) {
+
+        return 'localhost';
+    }
+
+    return 'live';
+}
+
+function dash_restrict_search_engines() {
+
+    if ( dash_is_env( $_SERVER['HTTP_HOST'] ) != 'live' && isset( $_POST['rd-submit'] ) ) {
+
+        $file = ABSPATH.'robots.txt';
+        $open = fopen( $file, 'w' );
+        fputs( $open, "User-agent: *\nDisallow: /" );
+        fclose( $open );
+    }
+}
