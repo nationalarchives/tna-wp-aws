@@ -100,5 +100,9 @@ function dash_restrict_search_engines() {
         $open = fopen( $file, 'w' );
         fputs( $open, "User-agent: *\nDisallow: /" );
         fclose( $open );
+    } elseif ( isset( $_POST['rd-del-submit'] ) ) {
+        if ( file_exists(ABSPATH.'robots.txt') ) {
+            unlink(ABSPATH.'robots.txt');
+        }
     }
 }

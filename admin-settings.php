@@ -28,9 +28,13 @@ function restrict_dashboard_settings_page() {
         .restrict-dashboard-admin p {
             margin: 1em 0;
         }
+        .submit .button {
+            margin-right: 0.5em;
+        }
     </style>
     <div class="wrap restrict-dashboard-admin">
         <h1>Restrict Dashboard</h1>
+        <h2>Whitelist</h2>
         <p>Your IP address: <strong><?php echo dash_get_client_ip() ?></strong></p>
         <p>Enabling this plugin will <strong>block all IP addresses</strong> accessing the dashboard login page except for the white listed addresses below.</p>
         <form method="post" action="options.php">
@@ -42,8 +46,13 @@ function restrict_dashboard_settings_page() {
                     <td><textarea name="dash_ip_whitelist"><?php echo esc_attr( get_option('dash_ip_whitelist') ); ?></textarea></td>
                 </tr>
             </table>
-            <h2>robots.txt</h2>
-            <p>Environment: <strong><?php echo dash_is_env( $_SERVER['HTTP_HOST'] ); ?></strong></p>
+            <?php submit_button(); ?>
+            <h2>Search engine bots</h2>
+            <p>Environment: <strong><?php
+                    $env = dash_is_env( $_SERVER['HTTP_HOST'] );
+                    echo $env;
+                    ?></strong></p>
+            <h3>robots.txt</h3>
             <p class="dash-frame">
                 <?php
                 if ( file_exists(ABSPATH.'robots.txt') ) {
@@ -54,7 +63,13 @@ function restrict_dashboard_settings_page() {
                 }
                 ?>
             </p>
-            <?php submit_button( 'Save Changes', 'primary', 'rd-submit' ); ?>
+            <p class="submit">
+            <?php if ( $env != 'live' ) {
+                submit_button( 'Discourage bots', 'primary', 'rd-submit', false );
+            }
+            submit_button( 'Delete robots.txt', 'secondary', 'rd-del-submit', false );
+            ?>
+            </p>
         </form>
     </div>
     <?php
