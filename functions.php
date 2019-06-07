@@ -101,8 +101,15 @@ function dash_restrict_search_engines() {
         fputs( $open, "User-agent: *\nDisallow: /" );
         fclose( $open );
     } elseif ( isset( $_POST['rd-del-submit'] ) ) {
+
         if ( file_exists(ABSPATH.'robots.txt') ) {
             unlink(ABSPATH.'robots.txt');
         }
+    } elseif ( isset( $_POST['rd-set-submit'] ) ) {
+
+        $file = ABSPATH.'robots.txt';
+        $open = fopen( $file, 'w' );
+        fputs( $open, "User-agent: *\nDisallow: /wp-admin/\nAllow: /wp-admin/admin-ajax.php" );
+        fclose( $open );
     }
 }

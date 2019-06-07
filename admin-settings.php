@@ -57,7 +57,7 @@ function restrict_dashboard_settings_page() {
                 <?php
                 if ( file_exists(ABSPATH.'robots.txt') ) {
                     $file = file_get_contents(ABSPATH.'robots.txt');
-                    echo $file;
+                    echo nl2br($file);
                 } else {
                     echo 'No robots.txt file found';
                 }
@@ -67,6 +67,7 @@ function restrict_dashboard_settings_page() {
             <?php if ( $env != 'live' ) {
                 submit_button( 'Discourage bots', 'primary', 'rd-submit', false );
             }
+            submit_button( 'Reset robots.txt', 'secondary', 'rd-set-submit', false );
             submit_button( 'Delete robots.txt', 'secondary', 'rd-del-submit', false );
             ?>
             </p>
