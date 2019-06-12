@@ -19,10 +19,24 @@ function restrict_dashboard_settings_page() {
             width: 100%;
             max-width: 480px;
         }
+        .restrict-dashboard-admin .dash-frame {
+            border: 1px solid #999;
+            padding: 1em;
+            background-color: #fff;
+            max-width: 576px;
+        }
+        .restrict-dashboard-admin p {
+            margin: 1em 0;
+        }
+        .submit .button {
+            margin-right: 0.5em;
+        }
     </style>
     <div class="wrap restrict-dashboard-admin">
         <h1>Restrict Dashboard</h1>
-        <p>Your current IP address: <?php echo dash_get_client_ip() ?></p>
+        <h2>Whitelist</h2>
+        <p>Your IP address: <strong><?php echo dash_get_client_ip() ?></strong></p>
+        <p>Enabling this plugin will <strong>block all IP addresses</strong> accessing the dashboard login page except for the white listed addresses below.</p>
         <form method="post" action="options.php">
             <?php settings_fields( 'restrict-dashboard-group' ); ?>
             <?php do_settings_sections( 'restrict-dashboard-group' ); ?>
@@ -33,6 +47,30 @@ function restrict_dashboard_settings_page() {
                 </tr>
             </table>
             <?php submit_button(); ?>
+            <h2>Search engine bots</h2>
+            <p>Environment: <strong><?php
+                    $env = dash_is_env( $_SERVER['HTTP_HOST'] );
+                    echo $env;
+                    ?></strong></p>
+            <h3>robots.txt</h3>
+            <p class="dash-frame">
+                <?php
+                if ( file_exists(ABSPATH.'robots.txt') ) {
+                    $file = file_get_contents(ABSPATH.'robots.txt');
+                    echo nl2br($file);
+                } else {
+                    echo 'No robots.txt file found';
+                }
+                ?>
+            </p>
+            <p class="submit">
+            <?php if ( $env != 'live' ) {
+                submit_button( 'Discourage bots', 'primary', 'rd-submit', false );
+            }
+            submit_button( 'Reset robots.txt', 'secondary', 'rd-set-submit', false );
+            submit_button( 'Delete robots.txt', 'secondary', 'rd-del-submit', false );
+            ?>
+            </p>
         </form>
     </div>
     <?php
