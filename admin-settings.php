@@ -63,14 +63,6 @@ function restrict_dashboard_settings_page() {
                 }
                 ?>
             </p>
-            <p class="submit">
-            <?php if ( $env != 'live' ) {
-                submit_button( 'Discourage bots', 'primary', 'rd-submit', false );
-            }
-            submit_button( 'Reset robots.txt', 'secondary', 'rd-set-submit', false );
-            submit_button( 'Delete robots.txt', 'secondary', 'rd-del-submit', false );
-            ?>
-            </p>
         </form>
     </div>
     <?php
