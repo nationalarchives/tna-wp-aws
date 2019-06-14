@@ -113,3 +113,4 @@ function dash_restrict_search_engines() {
         fclose( $open );
     }
 }
+
