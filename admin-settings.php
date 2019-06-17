@@ -18,9 +18,10 @@ function restrict_dashboard_settings_page() {
         .restrict-dashboard-admin input[type=text], .restrict-dashboard-admin textarea {
             width: 100%;
             max-width: 480px;
+            height: 130px;
         }
         .restrict-dashboard-admin .dash-frame {
-            border: 1px solid #999;
+            border: 1px solid #ddd;
             padding: 1em;
             background-color: #fff;
             max-width: 576px;
