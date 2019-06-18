@@ -13,8 +13,13 @@
 include 'functions.php';
 include 'admin-page.php';
 include 'restrict-dashboard.php';
+include 'login-notification.php';
 
 /* add_action functions */
 add_action( 'admin_init', 'tna_aws_admin_page_settings' );
 add_action( 'admin_menu', 'tna_aws_add_menu_item' );
+
 add_action( 'init', 'rd_restrict_dashboard' );
+
+/* add_filter functions */
+add_filter('login_message', 'ln_add_login_notification');
