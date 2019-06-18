@@ -1,3 +1,3 @@
-# tna-restrict-dashboard
+# tna-wp-aws
 
-The National Archives Restrict Dashboard Wordpress plugin.
+The National Archives Wordpress for AWS plugin.
